@@ -4,13 +4,7 @@
 
 ROLE=$1
 
-# Blank main.yml file
-IFS= read -r -d '' CONTENT <<'EOF'
----
-
-EOF
-
-echo "Creating Role $ROLE"
+echo "Creating role $ROLE folder structure..."
 
 mkdir $ROLE
 
@@ -21,14 +15,39 @@ mkdir $ROLE/tasks/
 mkdir $ROLE/templates/
 mkdir $ROLE/vars/
 
-# Create meta main.yml file
+
+echo "Creating boilerplate files..."
+
+cat > $ROLE/files/sample.txt <<'EOF'
+Files can be anything you want to use in your role.
+
+EOF
+
+cat > $ROLE/handlers/main.yml <<'EOF'
+---
+
+EOF
+
 cat > $ROLE/meta/main.yml <<'EOF'
 ---
 dependencies: []
 
 EOF
 
-# Create blank main.yml files
-echo $CONTENT > $ROLE/handlers/main.yml
-echo $CONTENT > $ROLE/tasks/main.yml
-echo $CONTENT > $ROLE/vars/main.yml
+cat > $ROLE/tasks/main.yml <<'EOF'
+---
+
+EOF
+
+cat > $ROLE/templates/template.j2 <<'EOF'
+# Ansible used the jinja2 templating engine
+# http://jinja.pocoo.org/
+
+EOF
+
+cat > $ROLE/vars/main.yml <<'EOF'
+---
+
+EOF
+
+echo "$ROLE role created!!!"
